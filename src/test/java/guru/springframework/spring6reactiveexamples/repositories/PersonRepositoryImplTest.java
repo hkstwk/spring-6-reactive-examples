@@ -72,4 +72,20 @@ class PersonRepositoryImplTest {
             System.out.println(person.getFirstName());
         }));
     }
+
+    @Test
+    void testFilterOnName() {
+        personRepository.findAll()
+                .filter(person -> person.getFirstName().equalsIgnoreCase("fiona"))
+                .subscribe(person -> System.out.println(person.getFirstName()));
+    }
+
+    @Test
+    void testGetById() {
+        Mono<Person> fionaMono = personRepository.findAll().filter(person -> person.getFirstName().equalsIgnoreCase("fiona")).next();
+
+        fionaMono.subscribe(person -> {
+            System.out.println(person.getFirstName());
+        });
+    }
 }
